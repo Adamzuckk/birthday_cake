@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Habiba</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Cairo:wght@400;600&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Rubik',sans-serif;
+  background:#000;
+  overflow:hidden;
+}
+
+/* INTRO */
+.intro{
+  position:fixed;
+  inset:0;
+  background:#050505;
+  color:#7CFF7C;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+  font-family:monospace;
+  transition:1s;
+}
+
+.intro.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.terminal{
+  width:80%;
+  max-width:600px;
+  line-height:1.8;
+}
+
+/* MAIN */
+.main{
+  display:none;
+  min-height:100vh;
+  padding-top:80px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,100,150,0.2), transparent 25%),
+    radial-gradient(circle at 70% 60%, rgba(255,100,150,0.15), transparent 25%),
+    linear-gradient(#fff0f6,#ffd6e7);
+  text-align:center;
+}
+
+/* TITLE */
+.title{
+  font-family:'Playfair Display',serif;
+  font-size:80px;
+  color:#ff4d88;
+  text-shadow:0 10px 30px rgba(255,0,100,0.3);
+  margin-bottom:20px;
+}
+
+/* SUB TEXT */
+.sub{
+  font-family:'Cairo',sans-serif;
+  font-size:22px;
+  margin-bottom:30px;
+  color:#b03060;
+}
+
+/* FRAME */
+.frame{
+  width:90%;
+  max-width:700px;
+  margin:auto;
+  padding:30px;
+  border-radius:30px;
+  background:white;
+  box-shadow:0 20px 60px rgba(255,0,100,0.2);
+}
+
+/* IMAGES */
+.images{
+  display:flex;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.images img{
+  width:50%;
+  height:200px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* BUTTON */
+.btn{
+  display:inline-block;
+  padding:14px 28px;
+  background:#111;
+  color:#fff;
+  border-radius:30px;
+  text-decoration:none;
+  font-size:16px;
+  transition:.3s;
+}
+
+.btn:hover{
+  transform:scale(1.05);
+  background:#000;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+  <div class="terminal" id="terminal"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="main">
+
+  <div class="title">HABIBA</div>
+  <div class="sub">This my little pepsi</div>
+
+  <div class="frame">
+    <div class="images">
+      <img src="pepsi/b1.jpeg" alt="Pepsi image 1">
+      <img src="pepsi/b2.jpeg" alt="Pepsi image 2">
+    </div>
+
+    <a href="message.html" class="btn">4u babe</a>
+  </div>
+
+</div>
+
+<script>
+const text = [
+  "booting system...",
+  "accessing memory...",
+  "loading emotions...",
+  "finding habiba...",
+  "access granted"
+];
+
+let i=0,j=0;
+const terminal=document.getElementById("terminal");
+
+function type(){
+  if(i<text.length){
+    if(j<text[i].length){
+      terminal.innerHTML+=text[i][j];
+      j++;
+      setTimeout(type,40);
+    }else{
+      terminal.innerHTML+="<br>";
+      i++; j=0;
+      setTimeout(type,300);
+    }
+  }else{
+    setTimeout(()=>{
+      document.getElementById("intro").classList.add("hide");
+      document.getElementById("main").style.display="block";
+      document.body.style.overflow="auto";
+    },1000);
+  }
+}
+
+type();
+</script>
+
+</body>
+</html>

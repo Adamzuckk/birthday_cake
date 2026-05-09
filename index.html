@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happy Birthday</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <style>
+        .loader button {
+            width: 50%;
+            height: 100px;
+            position: fixed;
+            left: 50%;
+            top: 45%;
+            transform: translate(-50%, -50%);
+            background: center no-repeat #fff;
+            z-index: 9999999999999999999999;
+            font-size: 50px;
+            outline: none;
+            box-sizing: border-box;
+            border: none;
+            border-radius: .3em;
+            text-transform: uppercase;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(110, 80, 20, .4),
+                inset 0 -2px 5px 1px rgba(139, 66, 8, 1),
+                inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+            background-image: linear-gradient(160deg, #a54e07, #b47e11, #fef1a2, #bc881b, #a54e07);
+            border: 1px solid #a55d07;
+            color: rgb(120, 50, 5);
+            text-shadow: 0 2px 2px rgba(250, 227, 133, 1);
+            cursor: pointer;
+            transition: all .2s ease-in-out;
+            background-size: 100% 100%;
+            background-position: center;
+        }
+
+        .loader button:hover {
+            background-size: 150% 150%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23),
+                inset 0 -2px 5px 1px #b17d10,
+                inset 0 -1px 1px 3px rgba(250, 227, 133, 1);
+            border: 1px solid rgba(165, 93, 7, .6);
+            color: rgba(120, 50, 5, .8);
+        }
+
+        .loader {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            background: url(img/back.png) center no-repeat #000;
+            background-size: cover;
+        }
+
+        .song {
+            display: none;
+        }
+
+        body {
+            background-color: #FFDAB9;
+            overflow-x: hidden;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        .balloon-border {
+            position: fixed;
+            top: 100%;
+            left: 0;
+            opacity: 0.5;
+            z-index: 99999999;
+            transition: top 8s linear;
+            pointer-events: none;
+        }
+
+        .area {
+            text-align: center;
+            font-size: 70px;
+            color: #C4515C;
+            letter-spacing: -7px;
+            font-weight: 700;
+            text-transform: uppercase;
+            animation: spin 2s ease-out infinite;
+            text-shadow: 0px 0px 5px #fff, 0px 0px 7px #fff;
+            margin-top: 20px;
+        }
+
+        #nae {
+            text-transform: capitalize;
+        }
+
+        #confetti {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateZ(0); }
+            25% { transform: rotateZ(10deg); }
+            50% { transform: rotateZ(0deg); }
+            75% { transform: rotateZ(-10deg); }
+        }
+
+        .type-wrap {
+            font-size: 25px;
+            color: #C4515C;
+            min-height: 60px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .main {
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            position: relative;
+            min-height: 100vh;
+            padding-top: 40px;
+            padding-bottom: 100px;
+            z-index: 3;
+        }
+
+        .main.show {
+            opacity: 1;
+        }
+
+        .hero-content {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .birthday-box {
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .banner-wrap {
+            margin-bottom: 20px;
+        }
+
+        .banner-wrap img {
+            width: 100%;
+            max-width: 520px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .cake-wrap {
+            margin-top: 35px;
+        }
+
+        .cake-wrap img {
+            width: 100%;
+            max-width: 240px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .enter-wrap {
+            text-align: center;
+            margin-top: 45px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .enter-wrap.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .enter-btn {
+            display: inline-block;
+            padding: 16px 32px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #ff5fa2, #c4515c);
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(196, 81, 92, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-4px) scale(1.04);
+            color: white;
+            text-decoration: none;
+        }
+
+        .screen-transition {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999999999;
+            transition: opacity 0.8s ease;
+        }
+
+        .screen-transition.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media (max-width: 768px) {
+            .loader button {
+                width: 80%;
+                font-size: 34px;
+                height: 80px;
+            }
+
+            .area {
+                font-size: 44px;
+                letter-spacing: -3px;
+            }
+
+            .type-wrap {
+                font-size: 20px;
+                min-height: 50px;
+            }
+
+            .enter-btn {
+                font-size: 20px;
+                padding: 14px 26px;
+            }
+
+            .banner-wrap img {
+                max-width: 340px;
+            }
+
+            .cake-wrap img {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen-transition" id="screenTransition"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="loader" id="loader">
+                <button id="play">Start</button>
+            </div>
+        </div>
+    </div>
+
+    <audio class="song" id="song" controls loop>
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser isn't invited for super fun audio time.
+    </audio>
+
+    <canvas id="confetti"></canvas>
+
+    <div class="main" id="mainContent">
+        <div class="container hero-content">
+            <div class="row justify-content-center w-100">
+                <div class="col-12 col-lg-8">
+                    <div class="birthday-box">
+                        <div class="banner-wrap">
+                            <img src="img/banner.png" alt="">
+                        </div>
+
+                        <div id="name" class="area">Habiba</div>
+
+                        <div class="type-wrap">
+                            <span id="typed"></span>
+                        </div>
+
+                        <div class="cake-wrap">
+                            <img src="img/cake.gif" alt="">
+                        </div>
+
+                        <div class="enter-wrap" id="enterWrap">
+                            <a href="main.html" class="enter-btn" id="enterBtn">Click Here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <img src="img/Balloon-Border.png" width="100%" class="balloon-border" id="balloonBorder">
+    </div>
+
+    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+        const playBtn = document.getElementById("play");
+        const loader = document.getElementById("loader");
+        const mainContent = document.getElementById("mainContent");
+        const enterWrap = document.getElementById("enterWrap");
+        const song = document.getElementById("song");
+        const enterBtn = document.getElementById("enterBtn");
+        const screenTransition = document.getElementById("screenTransition");
+        const balloonBorder = document.getElementById("balloonBorder");
+
+        playBtn.addEventListener("click", async function () {
+            loader.style.display = "none";
+            mainContent.classList.add("show");
+
+            try {
+                await song.play();
+            } catch (e) {}
+
+            setTimeout(() => {
+                enterWrap.classList.add("show");
+            }, 1800);
+
+            setTimeout(() => {
+                balloonBorder.style.top = "-500px";
+            }, 200);
+        });
+
+        new Typed("#typed", {
+            strings: [
+                "Happy Birthday Habiba",
+                "Have a wonderful day",
+                "Filled with joy and happiness."
+            ],
+            typeSpeed: 60,
+            backSpeed: 35,
+            backDelay: 1600,
+            loop: true
+        });
+
+        enterBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            screenTransition.classList.add("active");
+
+            setTimeout(() => {
+                window.location.href = "main.html";
+            }, 800);
+        });
+
+        const canvas = document.getElementById("confetti");
+        const ctx = canvas.getContext("2d");
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        let confetti = Array.from({ length: 120 }, () => ({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight - window.innerHeight,
+            r: Math.random() * 6 + 2,
+            d: Math.random() * 100,
+            color: ["#ff5fa2", "#ffd166", "#ffffff", "#ff85c1", "#c4515c"][Math.floor(Math.random() * 5)],
+            tilt: Math.random() * 10 - 10,
+            tiltAngleIncrement: Math.random() * 0.07 + 0.04,
+            tiltAngle: 0
+        }));
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            confetti.forEach(c => {
+                ctx.beginPath();
+                ctx.lineWidth = c.r;
+                ctx.strokeStyle = c.color;
+                ctx.moveTo(c.x + c.tilt + c.r / 2, c.y);
+                ctx.lineTo(c.x + c.tilt, c.y + c.tilt + c.r / 2);
+                ctx.stroke();
+            });
+
+            updateConfetti();
+            requestAnimationFrame(drawConfetti);
+        }
+
+        function updateConfetti() {
+            confetti.forEach(c => {
+                c.tiltAngle += c.tiltAngleIncrement;
+                c.y += (Math.cos(c.d) + 3 + c.r / 2) * 0.6;
+                c.x += Math.sin(0.5);
+                c.tilt = Math.sin(c.tiltAngle) * 15;
+
+                if (c.y > canvas.height) {
+                    c.y = -20;
+                    c.x = Math.random() * canvas.width;
+                }
+            });
+        }
+
+        drawConfetti();
+
+        new Snowflakes({
+            color: "#ffffff",
+            count: 25,
+            minOpacity: 0.2,
+            maxOpacity: 0.6
+        });
+    </script>
+</body>
+</html>
